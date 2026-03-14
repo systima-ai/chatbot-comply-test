@@ -1,0 +1,25 @@
+version: "1"
+
+organisation:
+  name: "Comply Test (vercel/chatbot fork)"
+  eu_presence: true
+  operator_role: deployer
+
+systems:
+  - id: ai-chatbot
+    name: "AI Chatbot"
+    description: "Next.js AI chatbot using Vercel AI SDK with multi-provider gateway"
+    scope:
+      paths:
+        - "app/**"
+        - "lib/**"
+        - "components/**"
+        - "hooks/**"
+        - "artifacts/**"
+    classification:
+      risk_level: limited
+      rationale: "AI chatbot interacting directly with natural persons; Article 50 transparency obligations apply. Not high-risk as it does not make decisions affecting legal rights or access to services."
+    regulations:
+      - eu_ai_act
+    documentation:
+      transparency: docs/transparency.md

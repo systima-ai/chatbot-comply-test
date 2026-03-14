@@ -1,0 +1,31 @@
+name: EU AI Act Compliance
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Systima Comply Scan
+        uses: systima-ai/comply@v1
+        id: comply
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          scan-mode: full
+          fail-on: none
+          output-format: comment
+
+      - name: Print results
+        run: |
+          echo "Compliance score: ${{ steps.comply.outputs.compliance-score }}"
+          echo "Risk level: ${{ steps.comply.outputs.risk-level }}"
+          echo "Findings: ${{ steps.comply.outputs.findings-count }}"
+          echo "Badge URL: ${{ steps.comply.outputs.badge-url }}"
